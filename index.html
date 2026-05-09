@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir y Ver Videos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .upload-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+        #video-upload {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .video-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        video {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Galería de Videos</h1>
+        
+        <div class="upload-section">
+            <input type="file" id="video-upload" accept="video/*">
+            <button onclick="uploadVideo()">Subir Video</button>
+        </div>
+
+        <div class="video-gallery" id="video-gallery">
+            <!-- Los videos aparecerán aquí -->
+        </div>
+    </div>
+
+    <script>
+        function uploadVideo() {
+            const input = document.getElementById('video-upload');
+            const file = input.files[0];
+            
+            if (file) {
+                // Crear URL para el archivo de video
+                const videoUrl = URL.createObjectURL(file);
+                
+                // Crear elemento de video
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
+                
+                const video = document.createElement('video');
+                video.src = videoUrl;
+                video.controls = true;
+                
+                const fileName = document.createElement('p');
+                fileName.textContent = file.name;
+                
+                videoItem.appendChild(video);
+                videoItem.appendChild(fileName);
+                
+                // Agregar a la galería
+                const gallery = document.getElementById('video-gallery');
+                gallery.appendChild(videoItem);
+                
+                // Limpiar input
+                input.value = '';
+            } else {
+                alert('Por favor selecciona un archivo de video');
+            }
+        }
+    </script>
+</body>
+</html>
+
